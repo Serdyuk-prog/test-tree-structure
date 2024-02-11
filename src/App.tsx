@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import { IServices } from './App.types';
+import { Services } from './App.types';
+import { DataTree } from './components/DataTree/DataTree';
 
 function App() {
-  //const [count, setCount] = useState(0);
-  const [services, setServices] = useState<IServices[]>([]);
+  const [services, setServices] = useState<Services[]>([]);
 
-  const arrayToTree = (data: IServices[]) => {
-    const tree:IServices[] = [];
+  const arrayToTree = (data: Services[]) => {
+    const tree:Services[] = [];
     const map = {};
 
     data.forEach(service => {
@@ -35,56 +35,16 @@ function App() {
 
     return tree;
   }
-
-  const drawTree = (tree: IServices[]) => {
-
-    return (
-    <ul>
-      {tree.map((service) => (
-        <li key={service.id}>
-          {service.node == 0 ? `${service.name} (${service.price} $)` : ''}
-          {service.node == 1 ? <details>
-            <summary>{service.name}</summary>
-            {service.children && drawTree(service.children)}
-          </details> : ''}
-        </li>
-      ))}
-    </ul>
-    );
-  }
   
   useEffect(() => {
     fetch('/api/services').then((res) => res.json()).then((data) => setServices(arrayToTree(data)));
-    
   }, []);
 
 
   return (
-    <>
-      {/* {services.map((service) => <div key={service.id}>{service.name}</div>)} */}
-      {drawTree(services)}
-      {/* <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-          {services.map((service) => <div key={service.id}>{service.name}</div>)}
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>   */}
-    </>
+    <div className="app">
+      <DataTree tree={services}/>
+    </div>
   )
 }
 

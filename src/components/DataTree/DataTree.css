@@ -1,0 +1,66 @@
+.data-tree {
+    list-style: none;
+    line-height: 2em;
+}
+
+.data-tree summary{
+    cursor: pointer;
+    list-style: none;
+}
+
+.data-tree li{
+    position: relative;
+}
+
+.data-tree li::before{
+    position: absolute;
+    left: -10px;
+    top: 0px;
+    border-left: 2px solid gray;
+    border-bottom: 2px solid gray;
+    content: "";
+    width: 8px;
+    height: 1em;
+}
+
+.data-tree li::after{
+    position: absolute;
+    left: -10px;
+    bottom: 0px;
+    border-left: 2px solid gray;
+    content: "";
+    width: 8px;
+    height: 100%;
+}
+
+.data-tree li:last-child::after{
+    display: none;
+}
+
+.data-tree:first-child > li::before, .data-tree:first-child > li::after{
+    display: none;
+}
+
+.data-tree summary{
+    text-decoration: underline;
+}
+
+.data-tree summary::before{
+    position: absolute;
+    left: -1.6em;
+    top:.75em;
+    content: "+";
+    background: #a16666;
+    color: #242424;
+    font-weight: 700;
+    display: block;
+    width: .8em;
+    height: .8em;
+    border-radius: 50em;
+    text-align: center;
+    line-height: .55em;
+}
+
+.data-tree details[open] > summary::before {
+    content: "-";
+}
