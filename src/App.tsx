@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import { IServices } from './App.types';
 
@@ -39,12 +37,16 @@ function App() {
   }
 
   const drawTree = (tree: IServices[]) => {
+
     return (
     <ul>
       {tree.map((service) => (
         <li key={service.id}>
-          {service.name}
-          {service.children && drawTree(service.children)}
+          {service.node == 0 ? `${service.name} (${service.price} $)` : ''}
+          {service.node == 1 ? <details>
+            <summary>{service.name}</summary>
+            {service.children && drawTree(service.children)}
+          </details> : ''}
         </li>
       ))}
     </ul>
