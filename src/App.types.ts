@@ -1,5 +1,10 @@
 export interface IServices {
     id: string;
+    head: number,
     name: string;
-    version: string;
+    node: 0 | 1;
+    price: number;
+    sorthead: number;
+    children: IServices[];
 }
+
